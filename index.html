@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>ios fetch bug</title>
+  <script>
+    document.onreadystatechange = function () {
+      if (document.readyState == "complete") {
+        var globalVisibilityHandler = function () {
+          console.log(document.hidden, document.visibilityState);
+          if (!document.hidden) {
+            var method = "POST";
+            var url = "https://javascript-idx-sdk-idfirst.okta.com/idp/idx/introspect";
+            // var method = "GET";
+            // var url = window.location.href;
+            
+            // Will fail
+            fetch(url, {
+              method: method,
+            }).then(function (r) {
+              alert("Fetched OK right after entring foreground");
+            }).catch(function (e) {
+              alert("Failed to fetch right after entring foreground: " + e.message);
+            });
+            
+            // Will NOT fail
+            setTimeout(function () {
+              fetch(url, {
+                method: method,
+              }).then(function (r) {
+                alert("Fetched OK after being 400ms in foreground");
+              }).catch(function (e) {
+                alert("Failed to fetch after being 400ms in foreground: " + e.message);
+              });
+            }, 400);
+          }
+        };
+        document.addEventListener('visibilitychange', globalVisibilityHandler);
+      }
+    }
+  </script>
+</head>
+<body>
+Switch to another app with swipe from screen bottom gesture and switch back to browser.<br>
+ You should see 2 alerts with "Fetched OK".<br>
+  If second alert is not showing, wait 30 seconds for "Load failed" alert.<br>
+  If you see 2 OK alerts, repeat swipes again.<br>
+</body>
+</html>
