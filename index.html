@@ -48,20 +48,22 @@
 </head>
 <body>
   <pre>
-    Open this page in Safari on iOS 18.
-    
-    Switch to any other app with swipe from bottom edge of the screen gesture
-     and then switch back to this page in Safari.
-    
-    This will trigger 2 fetch requests: 
-      #1 will start immediately,
-      #2 after small delay (400 ms).
-    
-    Expected result:  "Fetch #1 is OK"
-    Bug in Safari:    "Fetch #1 is ERR: Load failed" after 20-40 seconds
-    
-    If you don't see the bug, please repeat switching apps again.
-    Seems like fetch #2 is always OK because of delay.
+Open this page in Safari on iOS 18.
+
+Switch to any other app
+ with swipe from bottom edge of the screen
+ and then switch back to this page in Safari.
+
+This will trigger 2 fetch requests: 
+  #1 will start immediately,
+  #2 after small delay (400 ms).
+
+Expected result:  "Fetch #1 is OK"
+Bug in Safari:    "Fetch #1 is ERR: Load failed" 
+                  (after 20-40 seconds)
+
+If you don't see the bug, please repeat switching apps.
+Seems like fetch #2 is always OK because of delay.
   </pre>
   <div>
     <label for="fdelay">Delay (ms):</label>
