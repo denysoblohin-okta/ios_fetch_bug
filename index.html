@@ -12,10 +12,10 @@
           var result = document.getElementById("presult");
           result.innerText = "Document is now " + document.visibilityState;
           if (!document.hidden) {
-            // var method = "POST";
-            // var url = "https://javascript-idx-sdk-idfirst.okta.com/idp/idx/introspect";
-            var method = "GET";
-            var url = window.location.href;
+            var method = "POST";
+            var url = "https://javascript-idx-sdk-idfirst.okta.com/idp/idx/introspect";
+            // var method = "GET";
+            // var url = window.location.href;
             result.innerText += "\nFetching " + method + " " + url;
             
             // #1 will eventually fail
