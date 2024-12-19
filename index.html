@@ -3,37 +3,42 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>ios fetch bug</title>
+  <title>ios safari fetch bug</title>
   <script>
     document.onreadystatechange = function () {
       if (document.readyState == "complete") {
         var globalVisibilityHandler = function () {
-          console.log(document.hidden, document.visibilityState);
+          var delay = parseInt(document.getElementById("fdelay").value);
+          var result = document.getElementById("presult");
+          result.innerText = "Document is now " + document.visibilityState;
           if (!document.hidden) {
             var method = "POST";
             var url = "https://javascript-idx-sdk-idfirst.okta.com/idp/idx/introspect";
             // var method = "GET";
             // var url = window.location.href;
+            result.innerText += "\nFetching " + method + " " + url;
             
-            // Will fail
+            // #1 will eventually fail
+            result.innerText += "\nFetching #1 ...";
             fetch(url, {
               method: method,
             }).then(function (r) {
-              alert("Fetched OK right after entring foreground");
+              result.innerText += "\nFetch #1 is OK";
             }).catch(function (e) {
-              alert("Failed to fetch right after entring foreground: " + e.message);
+              result.innerText += "\nFetch #1 is ERR: " + e.message;
             });
             
-            // Will NOT fail
+            // #2 will not fail
             setTimeout(function () {
+              result.innerText += "\nFetching #2 (after " + delay + " ms) ...";
               fetch(url, {
                 method: method,
               }).then(function (r) {
-                alert("Fetched OK after being 400ms in foreground");
+                result.innerText += "\nFetch #2 is OK";
               }).catch(function (e) {
-                alert("Failed to fetch after being 400ms in foreground: " + e.message);
+                result.innerText += "\nFetch #2 is ERR: " + e.message;
               });
-            }, 400);
+            }, delay);
           }
         };
         document.addEventListener('visibilitychange', globalVisibilityHandler);
@@ -42,9 +47,25 @@
   </script>
 </head>
 <body>
-Switch to another app with swipe from screen bottom gesture and switch back to browser.<br>
- You should see 2 alerts with "Fetched OK".<br>
-  If second alert is not showing, wait 30 seconds for "Load failed" alert.<br>
-  If you see 2 OK alerts, repeat swipes again.<br>
+  <pre>
+    Open this page in Safari on iOS 18.
+    Switch to any other app with swipe from bottom edge of the screen gesture
+     and switch back to Safari.
+    This will trigger 2 fetch requests: 
+      #1 will start immediately,
+      #2 after small delay (400 ms).
+    Expected result: "Fetch #1 is OK" and "Fetch #2 is OK".
+    Bug in Safari: "Fetch #2 is ERR: Load failed" after 20-40 seconds.
+    If you don't see the bug, please repeat switching apps again.
+  </pre>
+  <div>
+    <label for="fdelay">Delay (ms):</label>
+    <input type="number" id="fdelay" name="fdelay" min="1" max="1000" value="400" />
+    <br />
+    <br />
+    Result:
+    <pre id="presult">
+    </pre>
+  </div>
 </body>
 </html>
