@@ -14,6 +14,11 @@ WebInspector for failed request:
 <img width="1134" alt="Screenshot 2024-12-19 at 12 30 14" src="https://github.com/user-attachments/assets/06a46136-06f1-4167-9758-12418aa497ae" />
 <img width="1131" alt="Screenshot 2024-12-19 at 12 30 22" src="https://github.com/user-attachments/assets/9e2ecc0f-6fda-408f-a263-aac47e5c158d" />
 
+Console error in WebInspector:
+```
+Failed to load resource: The network connection was lost
+```
+
 Bugs:
 - https://bugs.webkit.org/show_bug.cgi?id=284946
 - https://developer.apple.com/forums/thread/771127
