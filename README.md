@@ -1,5 +1,9 @@
-Open https://denysoblohin-okta.github.io/ios_fetch_bug/ in iOS Safari
 
+Bugs:
+- https://bugs.webkit.org/show_bug.cgi?id=284946
+- https://developer.apple.com/forums/thread/771127
+
+Open https://denysoblohin-okta.github.io/ios_fetch_bug/ in iOS Safari
 
 Video:
 
@@ -18,6 +22,3 @@ WebInspector for failed request:
 Failed to load resource: The network connection was lost
 ```
 
-Bugs:
-- https://bugs.webkit.org/show_bug.cgi?id=284946
-- https://developer.apple.com/forums/thread/771127
