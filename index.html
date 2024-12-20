@@ -11,7 +11,16 @@
           var delay = parseInt(document.getElementById("fdelay").value);
           var result = document.getElementById("presult");
           result.innerText = "Document is now " + document.visibilityState;
+          result.innerText += "\nonLine is " + (navigator.onLine ? "true" : "false");
           if (!document.hidden) {
+            console.log(navigator);
+            window.addEventListener("offline", (e) => {
+              result.innerText += "\nOffline";
+            });
+            window.addEventListener("online", (e) => {
+              result.innerText += "\nOnline";
+            });
+
             var method = "POST";
             var url = "https://javascript-idx-sdk-idfirst.okta.com/idp/idx/introspect";
             // var method = "GET";
@@ -30,6 +39,7 @@
             
             // #2 will not fail
             setTimeout(function () {
+            console.log(navigator);
               result.innerText += "\nFetching #2 (after " + delay + " ms) ...";
               fetch(url, {
                 method: method,
