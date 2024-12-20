@@ -11,7 +11,7 @@
           var delay = parseInt(document.getElementById("fdelay").value);
           var result = document.getElementById("presult");
           result.innerText = "Document is now " + document.visibilityState;
-          // result.innerText += "\nonLine is " + (navigator.onLine ? "true" : "false");
+          result.innerText += "\nonLine is " + (navigator.onLine ? "true" : "false");
           if (!document.hidden) {
             var method = "POST";
             var url = "https://javascript-idx-sdk-idfirst.okta.com/idp/idx/introspect";
@@ -23,7 +23,9 @@
             result.innerText += "\nFetching #1 ...";
             fetch(url, {
               method: method,
-              keepalive: true,
+              // test
+              keepalive: false,
+              priority: "high",
             }).then(function (r) {
               result.innerText += "\nFetch #1 is OK";
             }).catch(function (e) {
@@ -35,7 +37,9 @@
               result.innerText += "\nFetching #2 (after " + delay + " ms) ...";
               fetch(url, {
                 method: method,
-                keepalive: true,
+                // test
+                keepalive: false,
+                priority: "high",
               }).then(function (r) {
                 result.innerText += "\nFetch #2 is OK";
               }).catch(function (e) {
@@ -46,12 +50,12 @@
         };
         document.addEventListener('visibilitychange', globalVisibilityHandler);
 
-        // window.addEventListener("offline", (e) => {
-        //   result.innerText += "\nOffline";
-        // });
-        // window.addEventListener("online", (e) => {
-        //   result.innerText += "\nOnline";
-        // });
+        window.addEventListener("offline", (e) => {
+          result.innerText += "\nOffline";
+        });
+        window.addEventListener("online", (e) => {
+          result.innerText += "\nOnline";
+        });
       }
     }
   </script>
